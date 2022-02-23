@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PhoneStock - Liste{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <a href="{{ path('phone.new') }}" class="btn btn-primary">Ajouter un modèle</a>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Marque</th>
+            <th scope="col">Modèle</th>
+            <th scope="col">Année</th>
+            <th scope="col">IMEI(s)</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Fiche</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for model in models %}
+        <tr class="table-active">
+            <th scope="row">{{ model.brand }}</th>
+            <td>{{ model.name }}</td>
+            <td>{{ model.creationYear }}</td>
+            <td><ul>{% for imei in model.imeis %}<li>{{ imei.imei }}</li>{% endfor %}</ul></td>
+            {% if (model.imeis | length) <= model.stockLimit  %}
+                <td style="color: red">{{ model.imeis | length }}</td>
+            {% else %}
+                <td style="color: green">{{ model.imeis | length }}</td>
+            {% endif %}
+            <td><a href="{{ path('phone.show', {'id': model.id}) }}" class="btn btn-info">Edition</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

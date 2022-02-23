@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PhoneStock - Nouveau Modèle{% endblock %}
+
+{% block body %}
+    <h1>Edition du modèle {{ model.brand }} {{ model.name }}</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.brand, {'label': 'Marque', 'attr': {'placeholder': 'Marque du modèle'}}) }}
+    {{ form_row(form.name, {'label': 'Nom', 'attr': {'placeholder': 'Nom du modèle'}}) }}
+    {{ form_row(form.creationYear, {'label': 'Année', 'attr': {'placeholder': 'Année de création du modèle'}}) }}
+    {{ form_row(form.description, {'label': 'Description', 'attr': {'placeholder': 'Description du modèle'}}) }}
+    {{ form_row(form.stockLimit, {'label': 'Limite de stock', 'attr': {'placeholder': 'Valeur limite de stock'}}) }}
+    {{ form_row(form.active, {'label': 'Disponibilité du modèle'}) }}
+    <button type="submit" class="btn btn-success">Modifier le modèle</button>
+    {{ form_end(form) }}
+
+    <h2 class="mt-4">IMEI(s)</h2>
+    <ul id="listimei">
+        {% for imei in model.imeis %}
+            <li>{{ imei.imei }}</li>
+        {% endfor %}
+    </ul>
+    <h5 class="mt-4">Ajouter un IMEI</h5>
+    <form action="" class="mt-2" id="formImei">
+        <div class="form-group">
+            <label for="imei" class="form-label mt-4">IMEI</label>
+            <input type="text" class="form-control" id="imei" placeholder="Nouvel IMEI">
+        </div>
+        <button type="submit" class="btn btn-success mt-2" id="btnSubmit">Ajouter le nouvel IMEI</button>
+    </form>
+    {% block javascripts %}
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            document.getElementById("formImei").addEventListener("submit", function (e)
+            {
+                e.preventDefault();
+                const url = document.getElementById("btnSubmit").href;
+                axios.post("https://127.0.0.1:8000{{ path('phone.addImei', {'id': model.id}) }}", {
+                    imei: document.getElementById("imei").value
+                })
+                .then(function (message)
+                {
+                    console.log(message)
+                    document.getElementById("listimei").insertAdjacentHTML("beforeend", `<li>${message.data.imei}</li>`)
+                })
+                .catch(function (error)
+                {
+                    console.log(error)
+                });
+            })
+        </script>
+    {% endblock %}
+{% endblock %}

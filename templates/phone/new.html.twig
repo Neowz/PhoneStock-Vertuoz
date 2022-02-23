@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PhoneStock - Nouveau Modèle{% endblock %}
+
+{% block body %}
+    <h1>Création d'un nouveau modèle</h1>
+    {{ form_start(form) }}
+    {{ form_row(form.brand, {'label': 'Marque', 'attr': {'placeholder': 'Marque du modèle'}}) }}
+    {{ form_row(form.name, {'label': 'Nom', 'attr': {'placeholder': 'Nom du modèle'}}) }}
+    {{ form_row(form.creationYear, {'label': 'Année', 'attr': {'placeholder': 'Année de création du modèle'}}) }}
+    {{ form_row(form.description, {'label': 'Description', 'attr': {'placeholder': 'Description du modèle'}}) }}
+    {{ form_row(form.stockLimit, {'label': 'Limite de stock', 'attr': {'placeholder': 'Valeur limite de stock'}}) }}
+    <button type="submit" class="btn btn-success">Ajouter le modèle</button>
+    {{ form_end(form) }}
+{% endblock %}
