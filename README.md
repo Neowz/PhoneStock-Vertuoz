@@ -10,7 +10,7 @@ Code source de l'application PhoneStock, développé dans le cadre d'un test tec
 
 Clonez ce repository.  
 
-Exécutez successivement les commandes `npm install` & `npm run dev`
+Exécutez successivement les commandes `npm install`,  `npm run dev` & `symfony composer install`
 
 Il y a un dump de la base de donnée `dbDump.sql`  
 Veillez à appliquer ce dump sur une base de donnée de votre choix, ainsi que créer un utilisateur pour cette base.  
